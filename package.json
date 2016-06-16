@@ -44,5 +44,9 @@
   },
   "scripts": {
     "postinstall": "bower install"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "node-sass": "^3.5.3"
   }
 }
