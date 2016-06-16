@@ -3,21 +3,20 @@
  */
 
 (function () {
-  'use strict';
+    'use strict';
 
-  angular.module('BlurAdmin.theme')
-    .config(config);
+    angular.module('BlurAdmin.theme').config(config);
 
-  /** @ngInject */
-  function config(baConfigProvider, colorHelper) {
-    //baConfigProvider.changeTheme({blur: true});
-    //
-    //baConfigProvider.changeColors({
-    //  default: 'rgba(#000000, 0.2)',
-    //  defaultText: '#ffffff',
-    //  dashboard: {
-    //    white: '#ffffff',
-    //  },
-    //});
-  }
+    /** @ngInject */
+    function config(baConfigProvider, colorHelper) {
+        //baConfigProvider.changeTheme({blur: true});
+        //
+        //baConfigProvider.changeColors({
+        //  default: 'rgba(#000000, 0.2)',
+        //  defaultText: '#ffffff',
+        //  dashboard: {
+        //    white: '#ffffff',
+        //  },
+        //});
+    }
 })();
