@@ -4,7 +4,6 @@
  */
 (function () {
     'use strict';
-    console.log('start');
 
     angular.module('BlurAdmin.pages', [
         'ui.router',
@@ -17,10 +16,8 @@
         'BlurAdmin.pages.charts',
         'BlurAdmin.pages.maps',
         'BlurAdmin.pages.profile'
-    ]).config(routeConfig);
+    ]).config(function route($urlRouterProvider, baSidebarServiceProvider) {
 
-    /** @ngInject */
-    function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
         $urlRouterProvider.otherwise('/dashboard');
 
         baSidebarServiceProvider.addStaticItem({
@@ -74,6 +71,5 @@
             title: '管理工具',
             icon : 'ion-gear-a'
         });
-    }
-
+    });
 })();

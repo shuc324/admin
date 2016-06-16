@@ -46,6 +46,7 @@
     "postinstall": "bower install"
   },
   "dependencies": {
+    "config": "^1.21.0",
     "lodash": "^4.13.1",
     "node-sass": "^3.5.3"
   }
