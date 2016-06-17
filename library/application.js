@@ -105,10 +105,6 @@ export default class app extends container {
     };
 
     start = () => {
-        this.express.use('*', (request, response) => {
-            response.json({code: 404, message: 'not found', data: {}});
-        });
-
         this.express.listen(3000);
     }
 }

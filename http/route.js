@@ -26,5 +26,14 @@ export default class route {
         app.express.use('/maps/*', express.static(app.app_path + "/public/maps"));
         app.express.use('/scripts/*', express.static(app.app_path + "/public/scripts"));
         app.express.use('/styles/*', express.static(app.app_path + "/public/styles"));
+
+        // 404
+        app.express.use('*', (request, response) => {
+            response.json({
+                code   : 404,
+                message: 'not found',
+                data   : {}
+            });
+        });
     }
 }
