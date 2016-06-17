@@ -8,7 +8,11 @@ import env from "../library/env";
 class app {
     constructor() {
         return {
-            "autoload": ["http/services", "http/middleware", "models"]
+            "autoload": [
+                "http/services",
+                //"http/middleware",
+                "models"
+            ]
         };
     }
 }

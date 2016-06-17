@@ -100,12 +100,12 @@ export default class app extends container {
     };
 
     start = () => {
-        this.express.use('*', (request, response) => {
-            response.json({code: 404, message: 'not found', data: {}});
-        });
+        //this.express.use('*', (request, response) => {
+        //    response.json({code: 404, message: 'not found', data: {}});
+        //});
 
         // 设置静态文件
-        this.express.use(this.express.static(path.join(__dirname, 'public')));
+        this.express.use(Express.static(__dirname + "/public"));
 
         this.express.listen(3000);
     }
