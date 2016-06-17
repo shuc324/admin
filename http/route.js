@@ -5,12 +5,17 @@
 
 import express from "express";
 
-export default class {
+export default class route {
     static start(app) {
         // 定义路由
         app.use('/test_service');
 
 
+        route.asserts(app);
+        return app.start();
+    }
+
+    static asserts(app) {
         // 静态文件
         app.express.use('/index.html', express.static(app.app_path + "/public"));
         app.express.use('/auth.html', express.static(app.app_path + "/public"));
@@ -21,7 +26,5 @@ export default class {
         app.express.use('/maps/*', express.static(app.app_path + "/public/maps"));
         app.express.use('/scripts/*', express.static(app.app_path + "/public/scripts"));
         app.express.use('/styles/*', express.static(app.app_path + "/public/styles"));
-
-        return app.start();
     }
 }
