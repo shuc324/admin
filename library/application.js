@@ -22,6 +22,7 @@ export default class app extends container {
     }
 
     resolve = (prefix, service, method, request, response, next) => {
+        console.log(service);
         let object = this.build(prefix + service.match(/[\w_-]+/));
 
         return object != undefined && Reflect.has(object, method) ? object[method](request, response, next) : {
