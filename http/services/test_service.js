@@ -13,13 +13,13 @@ export default class extends service {
     };
 
     save = () => {
-        let data = new TestModel({nickname: "f", user_id: "1"});
-
-        let save_result = data.save();
-
-        save_result.then(doc => {
-            console.log(doc);
-        });
+        //let data = new TestModel({nickname: "f", user_id: "1"});
+        //
+        //let save_result = data.save();
+        //
+        //save_result.then(doc => {
+        //    console.log(doc);
+        //});
 
         return "success save test data to mongodb!";
     };

@@ -30,6 +30,7 @@ export default class app extends container {
             };
         }
         let object = this.build(prefix + service.match(/[\w_-]+/));
+
         return object != undefined && Reflect.has(object, method) ? object[method](request, response, next) : {
             code   : 404,
             message: 'not found',
@@ -104,9 +105,6 @@ export default class app extends container {
     };
 
     start = () => {
-        // 设置静态文件
-        this.express.use(Express.static(__dirname + "/public"));
-
         this.express.use('*', (request, response) => {
             response.json({code: 404, message: 'not found', data: {}});
         });
