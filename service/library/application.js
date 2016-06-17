@@ -24,7 +24,11 @@ export default class app extends container {
     resolve = (prefix, service, method, request, response, next) => {
         let object = this.build(prefix + service.match(/[\w_-]+/));
 
-        return object != undefined && Reflect.has(object, method) ? object[method](request, response, next) : {code: 404, message: 'not found', data: {}};
+        return object != undefined && Reflect.has(object, method) ? object[method](request, response, next) : {
+            code   : 404,
+            message: 'not found',
+            data   : {}
+        };
     };
 
     use = (service, callback, middleware) => {
@@ -99,6 +103,10 @@ export default class app extends container {
         this.express.use('*', (request, response) => {
             response.json({code: 404, message: 'not found', data: {}});
         });
+
+        // 设置静态文件
+        this.express.use(this.express.static(path.join(__dirname, 'public')));
+
         this.express.listen(3000);
     }
 }
