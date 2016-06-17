@@ -22,9 +22,14 @@ export default class app extends container {
     }
 
     resolve = (prefix, service, method, request, response, next) => {
-        console.log(service);
+        if (typeof service != "string") {
+            return {
+                code   : 404,
+                message: 'not found',
+                data   : {}
+            };
+        }
         let object = this.build(prefix + service.match(/[\w_-]+/));
-
         return object != undefined && Reflect.has(object, method) ? object[method](request, response, next) : {
             code   : 404,
             message: 'not found',
@@ -38,7 +43,6 @@ export default class app extends container {
             if (typeof callback == "function") {
                 return response.json(callback(this));
             }
-
             switch (typeof middleware) {
                 case "function":
                     request = middleware(request, response, next);
@@ -47,7 +51,6 @@ export default class app extends container {
                     request = this.build('http/middleware/' + middleware, request, response, next);
                     break;
             }
-
             return response.json(this.resolve('http/services/', service, request.path.match(/[\w_-]+/) + "", request, response, next));
         });
     };
@@ -101,12 +104,12 @@ export default class app extends container {
     };
 
     start = () => {
-        //this.express.use('*', (request, response) => {
-        //    response.json({code: 404, message: 'not found', data: {}});
-        //});
-
         // 设置静态文件
         this.express.use(Express.static(__dirname + "/public"));
+
+        this.express.use('*', (request, response) => {
+            response.json({code: 404, message: 'not found', data: {}});
+        });
 
         this.express.listen(3000);
     }
