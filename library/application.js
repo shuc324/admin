@@ -4,6 +4,7 @@
 "use strict";
 
 import Express from "express";
+import body from "body-parser";
 import config from "../config/app";
 import container from "./container";
 
@@ -17,6 +18,9 @@ export default class app extends container {
         this.app_path = app_path;
 
         this.express = new Express();
+
+        this.express.use(body.json({limit: '1mb'}));
+        this.express.use(body.urlencoded({extended: true}));
 
         typeof config.autoload == "object" && this.autoload(config.autoload, this.app_path);
     }
@@ -52,7 +56,10 @@ export default class app extends container {
                     request = this.build('http/middleware/' + middleware, request, response, next);
                     break;
             }
-            return response.json(this.resolve('http/services/', service, request.path.match(/[\w_-]+/) + "", request, response, next));
+            let result = this.resolve('http/services/', service.match(/[\w_-]+/g)[0], service.match(/[\w_-]+/g)[1], request, response, next);
+            if (result) {
+                return response.json(result);
+            }
         });
     };
 
@@ -76,13 +83,16 @@ export default class app extends container {
                 return response.json({code: 404, message: 'not found: ' + service, data: {}});
             }
 
-            return response.json(this.resolve('http/services/', service.match(/[\w_-]+/g)[0], service.match(/[\w_-]+/g)[1], request, response, next));
+            let result = this.resolve('http/services/', service.match(/[\w_-]+/g)[0], service.match(/[\w_-]+/g)[1], request, response, next);
+            if (result) {
+                return response.json(result);
+            }
         });
     };
 
     post = (service, callback, middleware) => {
 
-        this.express.get(service, (request, response, next) => {
+        this.express.post(service + "/*", (request, response, next) => {
             if (typeof callback == "function") {
                 return response.json(callback(this));
             }
@@ -96,11 +106,14 @@ export default class app extends container {
                     break;
             }
 
-            if (service.match(/[\w_-]+/g).length < 2) {
+            if (service.match(/[\w_-]+/g).length < 1 || request.params[0].match(/[\w_-]+/g).length < 1) {
                 return response.json({code: 404, message: 'not found: ' + service, data: {}});
             }
 
-            return response.json(this.resolve('http/services/', service.match(/[\w_-]+/g)[0], service.match(/[\w_-]+/g)[1], request, response, next));
+            let result = this.resolve('http/services/', service.match(/[\w_-]+/g)[0], request.params[0].match(/[\w_-]+/g)[0], request, response, next);
+            if (result) {
+                return response.json(result);
+            }
         });
     };
 

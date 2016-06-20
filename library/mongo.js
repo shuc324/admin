@@ -4,9 +4,12 @@
 "use strict";
 
 import crypto from "crypto";
-import mongoose from "mongoose";
+import bluebird from "bluebird";
+//import m from "mongoose";
 import logger from "./logger";
 import config from "../config/mongo";
+
+let mongoose = bluebird.promisifyAll(require("mongoose"));
 
 class mongo {
     pool = new Map();

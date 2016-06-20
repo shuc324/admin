@@ -8,8 +8,7 @@ import express from "express";
 export default class route {
     static start(app) {
         // 定义路由
-        app.use('/test_service');
-
+        app.post('/user');
 
         route.asserts(app);
         return app.start();
