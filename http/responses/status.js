@@ -8,9 +8,17 @@ class status {
 
     FAILED = -200;
 
+    SYSTEM_ERROR = -400;
+
+    USER_NOT_EXISTS = -10000;
+    PASSWORD_ERROR = -10010;
+
     message = {
-        SUCCESS: "success",
-        FAILURE: "failure"
+        SUCCESS        : "success",
+        FAILURE        : "failure",
+        SYSTEM_ERROR   : "system error",
+        USER_NOT_EXISTS: "user not exists",
+        PASSWORD_ERROR : "password error"
     };
 
     out(state, data, message) {
@@ -28,6 +36,10 @@ class status {
 
     failure(data) {
         return this.out('FAILURE', data);
+    }
+
+    error() {
+        return this.out('SYSTEM_ERROR');
     }
 }
 

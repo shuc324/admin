@@ -23,5 +23,10 @@ export default class helper {
     // 加盐加密
     static encrypt = (str, salt) => {
         return helper.str_md5(helper.str_md5(str) + salt);
-    }
+    };
+
+    static encrypt_encode = (str, salt) => {
+
+        return str;
+    };
 }

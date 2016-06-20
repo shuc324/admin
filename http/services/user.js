@@ -10,6 +10,11 @@ import AdminModel from "../../models/admin_model";
 
 export default class extends service {
 
+    // 用户cookie键名
+    USER_COOKIE_KEY = "user_id";
+    USER_COOKIE_KEY_SALT = "okh63b";
+    USER_COOKIE_EXPIRE_TIME = 7200;
+
     /**
      * private
      * 检查用户名格式
@@ -33,7 +38,7 @@ export default class extends service {
     }
 
     /**
-     * public
+     * @public
      * 注册
      */
     sign_up = (request, response) => {
@@ -65,15 +70,41 @@ export default class extends service {
                 default :
                     response.json(status.failure());
             }
+        }).catch(err => {
+            response.json(status.error());
         });
     };
 
     /**
+     * @public
      * 登录
-     * todo ...
      */
-    sign_in = () => {
+    sign_in = (request, response) => {
+        let username = request.body.username || "";
+        let password = request.body.password || "";
 
+        AdminModel.findOne({username: username}, "password salt").execAsync().then(user => {
+            switch (true) {
+                case !user:
+                    response.json(status.out('USER_NOT_EXISTS'));
+                    break;
+                case helper.encrypt(password, user.salt) == user.password:
+                    // 设置cookie todo 似乎好像没效果
+                    response.cookie(this.USER_COOKIE_KEY, helper.encrypt_encode(user._id, this.USER_COOKIE_KEY_SALT, {
+                        maxAge  : this.USER_COOKIE_EXPIRE_TIME,
+                        httpOnly: true
+                    }));
+                    response.json(status.success());
+                    break;
+                case helper.encrypt(password, user.salt) != user.password:
+                    response.json(status.out('PASSWORD_ERROR'));
+                    break;
+                default :
+                    response.json(status.failure());
+            }
+        }).catch(err => {
+            response.json(status.error());
+        });
     };
 
     /**
