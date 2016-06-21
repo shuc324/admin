@@ -11,7 +11,7 @@ import AdminModel from "../../models/admin_model";
 export default class extends service {
 
     // 用户cookie键名
-    USER_COOKIE_KEY = "user_id";
+    USER_COOKIE_KEY = "admin";
     USER_COOKIE_KEY_SALT = "okh63b";
     USER_COOKIE_EXPIRE_TIME = 7200;
 
@@ -89,7 +89,7 @@ export default class extends service {
                     response.json(status.out('USER_NOT_EXISTS'));
                     break;
                 case helper.encrypt(password, user.salt) == user.password:
-                    // 设置cookie todo 似乎好像没效果
+                    // 设置cookie
                     response.cookie(this.USER_COOKIE_KEY, helper.encrypt_encode(user._id, this.USER_COOKIE_KEY_SALT, {
                         maxAge  : this.USER_COOKIE_EXPIRE_TIME,
                         httpOnly: true
