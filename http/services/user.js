@@ -50,12 +50,10 @@ export default class extends service {
 
             switch (true) {
                 case !ligical_username :
-                    // todo 更详细的提示信息
-                    response.json(status.failure());
+                    response.json(status.out('USERNAME_ERROR'));
                     break;
                 case !ligical_password:
-                    // todo 更详细的提示信息
-                    response.json(status.failure());
+                    response.json(status.out('PASSWORD_ERROR'));
                     break;
                 case ligical_username && ligical_password:
                     let salt = helper.range_str();
@@ -108,10 +106,11 @@ export default class extends service {
     };
 
     /**
+     * @public
      * 退出
-     * todo ...
      */
-    sign_out = () => {
-
+    sign_out = (request, response) => {
+        response.clearCookie(this.USER_COOKIE_KEY);
+        return status.success();
     };
 }

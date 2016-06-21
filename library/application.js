@@ -56,7 +56,7 @@ export default class app extends container {
                     request = this.build('http/middleware/' + middleware, request, response, next);
                     break;
             }
-            let result = this.resolve('http/services/', service.match(/[\w_-]+/g)[0], service.match(/[\w_-]+/g)[1], request, response, next);
+            let result = this.resolve('http/services/', service.match(/[\w_-]+/g)[0], request.path.match(/[\w_-]+/g)[0], request, response, next);
             if (result) {
                 return response.json(result);
             }

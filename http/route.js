@@ -16,7 +16,7 @@ export default class route {
 
     static asserts(app) {
         // 静态文件
-        app.express.use(['/index.html', '/auth.html', '/404.html', '/reg.html'], express.static(app.app_path + "/public"));
+        app.express.use(['/', '/index.html', '/auth.html', '/404.html', '/reg.html'], express.static(app.app_path + "/public"));
 
         app.express.use('/assets/*', express.static(app.app_path + "/public/assets"));
         app.express.use('/fonts/*', express.static(app.app_path + "/public/fonts"));

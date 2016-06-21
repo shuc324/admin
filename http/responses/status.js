@@ -11,6 +11,9 @@ class status {
     SYSTEM_ERROR = -400;
 
     USER_NOT_EXISTS = -10000;
+
+    USERNAME_ERROR = -100005;
+
     PASSWORD_ERROR = -10010;
 
     message = {
@@ -18,6 +21,7 @@ class status {
         FAILURE        : "failure",
         SYSTEM_ERROR   : "system error",
         USER_NOT_EXISTS: "user not exists",
+        USERNAME_ERROR : "username error",
         PASSWORD_ERROR : "password error"
     };
 
