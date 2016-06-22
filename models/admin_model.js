@@ -9,9 +9,10 @@ class AdminModel extends MongoModel {
         return new this.Schema({
             username   : String,
             password   : String,
+            full_name  : {type: String, default: ''},
             salt       : {type: String, default: ''},
             // 是否是已认证的管理员
-            auth_status: {type: Number, default: 0},
+            auth_status: {type: Number, default: 0}
         });
     }
 }

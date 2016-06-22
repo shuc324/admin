@@ -44,6 +44,7 @@ export default class extends service {
     sign_up = (request, response) => {
         let username = request.body.username || "";
         let password = request.body.password || "";
+        let full_name = request.body.full_name || "";
 
         this.check_username(username).then(ligical_username => {
             let ligical_password = this.check_password(password);
@@ -58,9 +59,10 @@ export default class extends service {
                 case ligical_username && ligical_password:
                     let salt = helper.range_str();
                     let data = {
-                        username: username,
-                        password: helper.encrypt(password, salt),
-                        salt    : salt
+                        username : username,
+                        password : helper.encrypt(password, salt),
+                        full_name: full_name,
+                        salt     : salt
                     };
                     (new AdminModel(data)).save();
                     response.json(status.success());
