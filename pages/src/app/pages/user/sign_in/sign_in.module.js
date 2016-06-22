@@ -10,7 +10,7 @@
                 url        : '/sign_in',
                 templateUrl: 'app/pages/user/sign_in/sign_in.html',
                 controller : 'sign_in_ctrl',
-                title      : 'sign_in',
+                title      : '登录',
                 sidebarMeta: {
                     order: 0
                 }

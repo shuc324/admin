@@ -5,16 +5,17 @@
 
 (function () {
     angular.module('BlurAdmin.pages.user', [
+        'BlurAdmin.pages.user.list',
         'BlurAdmin.pages.user.sign_in'
     ]).config(function ($stateProvider) {
         $stateProvider.state('user', {
             url        : '/user',
             template   : '<ui-view></ui-view>',
             abstract   : true,
-            title      : 'user',
+            title      : '成员管理',
             sidebarMeta: {
-                icon : 'ion-android-laptop',
-                order: 200
+                icon : 'ion-ios-people',
+                order: 9000
             }
         });
     });
