@@ -60,7 +60,7 @@ export default class extends service {
                     let salt = helper.range_str();
                     let data = {
                         username : username,
-                        password : helper.encrypt(password, salt),
+                        password : helper.md5_encrypt(password, salt),
                         full_name: full_name,
                         salt     : salt
                     };
@@ -88,15 +88,15 @@ export default class extends service {
                 case !user:
                     response.json(status.out('USER_NOT_EXISTS'));
                     break;
-                case helper.encrypt(password, user.salt) == user.password:
+                case helper.md5_encrypt(password, user.salt) == user.password:
                     // 设置cookie
-                    response.cookie(this.USER_COOKIE_KEY, helper.encrypt_encode(user._id, this.USER_COOKIE_KEY_SALT, {
+                    response.cookie(this.USER_COOKIE_KEY, helper.encrypt(user._id, this.USER_COOKIE_KEY_SALT, {
                         maxAge  : this.USER_COOKIE_EXPIRE_TIME,
                         httpOnly: true
                     }));
                     response.json(status.success());
                     break;
-                case helper.encrypt(password, user.salt) != user.password:
+                case helper.md5_encrypt(password, user.salt) != user.password:
                     response.json(status.out('PASSWORD_ERROR'));
                     break;
                 default :
