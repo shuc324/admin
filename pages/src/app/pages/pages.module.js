@@ -8,7 +8,7 @@
     angular.module('BlurAdmin.pages', [
         'ui.router',
 
-        'BlurAdmin.pages.user',
+        'BlurAdmin.pages.setting',
 
         'BlurAdmin.pages.dashboard',
         'BlurAdmin.pages.ui',

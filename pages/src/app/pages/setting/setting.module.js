@@ -4,15 +4,15 @@
 "use strict";
 
 (function () {
-    angular.module('BlurAdmin.pages.user', [
-        'BlurAdmin.pages.user.list',
-        'BlurAdmin.pages.user.sign_in'
+    angular.module('BlurAdmin.pages.setting', [
+        //'BlurAdmin.pages.setting.group',
+        'BlurAdmin.pages.setting.user_list'
     ]).config(function ($stateProvider) {
-        $stateProvider.state('user', {
-            url        : '/user',
+        $stateProvider.state('setting', {
+            url        : '/setting',
             template   : '<ui-view></ui-view>',
             abstract   : true,
-            title      : '成员管理',
+            title      : '系统设置',
             sidebarMeta: {
                 icon : 'ion-ios-people',
                 order: 9000
