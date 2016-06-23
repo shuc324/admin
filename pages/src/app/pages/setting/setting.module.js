@@ -5,8 +5,8 @@
 
 (function () {
     angular.module('BlurAdmin.pages.setting', [
-        //'BlurAdmin.pages.setting.group',
-        'BlurAdmin.pages.setting.user_list'
+        'BlurAdmin.pages.setting.user_list',
+        'BlurAdmin.pages.setting.user_access'
     ]).config(function ($stateProvider) {
         $stateProvider.state('setting', {
             url        : '/setting',

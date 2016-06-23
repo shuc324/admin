@@ -11,7 +11,7 @@
                 templateUrl: 'app/pages/setting/user_list/user_list.html',
                 title      : '成员列表',
                 sidebarMeta: {
-                    order: 1
+                    order: 0
                 }
             });
         });
