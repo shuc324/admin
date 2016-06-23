@@ -9,11 +9,10 @@ import engines from "consolidate";
 export default class route {
     static start(app) {
         // 定义路由
+        app.post('/user');
+        app.post('/menu');
 
         route.asserts(app);
-
-        app.post('/user');
-
         return app.start();
     }
 

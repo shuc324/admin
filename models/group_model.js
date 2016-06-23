@@ -7,9 +7,20 @@ class GroupModel extends Model {
 
     schema() {
         return new this.Schema({
-            name     : String,
-            parent_id: this.Schema.ObjectId,
-            level    : {type: Number, default: 0}
+            name         : String,
+            parent_id    : this.Schema.ObjectId,
+            level        : {
+                type   : Number,
+                default: 0
+            },
+            created_time : {
+                type   : Date,
+                default: Date.now
+            },
+            modified_time: {
+                type   : Date,
+                default: Date.now
+            }
         });
     }
 }

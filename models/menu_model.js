@@ -7,10 +7,18 @@ class MenuModel extends Model {
 
     schema() {
         return new this.Schema({
-            name      : String,
-            parent_id : this.Schema.ObjectId,
-            level     : {type: Number, default: 0},
-            group_list: []
+            name         : String,
+            parent_id    : this.Schema.ObjectId,
+            level        : {type: Number, default: 0},
+            group_list   : [],
+            created_time : {
+                type   : Date,
+                default: Date.now
+            },
+            modified_time: {
+                type   : Date,
+                default: Date.now
+            }
         });
     }
 }

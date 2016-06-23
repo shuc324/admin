@@ -7,13 +7,41 @@ class UserModel extends Model {
 
     schema() {
         return new this.Schema({
-            username   : String,
-            password   : String,
+            username     : String,
+            password     : String,
             // 是否是已认证的管理员
-            auth_status: {type: Number, default: 0},
-            group_id   : {type: Number, default: 0},
-            full_name  : {type: String, default: ''},
-            salt       : {type: String, default: ''}
+            auth_status  : {
+                type   : Number,
+                default: 0
+            },
+            group        : {
+                id       : this.Schema.ObjectId,
+                name     : {
+                    type   : String,
+                    default: ''
+                },
+                parent_id: this.Schema.ObjectId
+            },
+            full_name    : {
+                type   : String,
+                default: ''
+            },
+            avatar       : {
+                type   : String,
+                default: ''
+            },
+            salt         : {
+                type   : String,
+                default: ''
+            },
+            created_time : {
+                type   : Date,
+                default: Date.now
+            },
+            modified_time: {
+                type   : Date,
+                default: Date.now
+            }
         });
     }
 }

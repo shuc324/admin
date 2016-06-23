@@ -6,6 +6,7 @@
 import service from "./service";
 import helper from "../utils/helper";
 import status from "../responses/status";
+import logger from "../../library/logger";
 import UserModel from "../../models/user_model";
 
 export default class extends service {
@@ -14,6 +15,8 @@ export default class extends service {
     USER_COOKIE_KEY = "user";
     USER_COOKIE_KEY_SALT = "okh63b";
     USER_COOKIE_EXPIRE_TIME = 7200;
+
+    USER_DEFAULT_AVATAR = "assets/img/app/profile/Nasta.png";
 
     /**
      * private
@@ -45,6 +48,7 @@ export default class extends service {
         let username = request.body.username || "";
         let password = request.body.password || "";
         let full_name = request.body.full_name || "";
+        let avatar = request.body.avatar || this.USER_DEFAULT_AVATAR;
 
         this.check_username(username).then(ligical_username => {
             let ligical_password = this.check_password(password);
@@ -59,10 +63,11 @@ export default class extends service {
                 case ligical_username && ligical_password:
                     let salt = helper.range_str();
                     let data = {
-                        username : username,
-                        password : helper.md5_encrypt(password, salt),
-                        full_name: full_name,
-                        salt     : salt
+                        username     : username,
+                        password     : helper.md5_encrypt(password, salt),
+                        full_name    : full_name,
+                        avatar       : avatar,
+                        salt         : salt
                     };
                     (new UserModel(data)).save();
                     response.json(status.success());
@@ -71,6 +76,7 @@ export default class extends service {
                     response.json(status.failure());
             }
         }).catch(err => {
+            logger.error(err.toString());
             response.json(status.error());
         });
     };
@@ -103,6 +109,7 @@ export default class extends service {
                     response.json(status.failure());
             }
         }).catch(err => {
+            logger.error(err.toString());
             response.json(status.error());
         });
     };
@@ -114,5 +121,34 @@ export default class extends service {
     sign_out = (request, response) => {
         response.clearCookie(this.USER_COOKIE_KEY);
         return status.success();
+    };
+
+    /**
+     * @public
+     * 成员列表
+     */
+    list = (request, response) => {
+        // todo ... 权限检验
+        let start = parseInt(request.body.start) || 0;
+        let limit = parseInt(request.body.limit) || 15;
+
+        UserModel.count().execAsync()
+            .then(count => {
+                UserModel.find({}, "username full_name avatar group auth_status").sort("-created_time").skip(start).limit(limit).execAsync()
+                    .then(users => {
+                        let res = {
+                            start: start + users.length,
+                            total: count,
+                            list : users
+                        };
+                        response.json(status.success(res));
+                    }).catch(err => {
+                        logger.error(err.toString());
+                        response.json(status.error());
+                    });
+            }).catch(err => {
+                logger.error(err.toString());
+                response.json(status.error());
+            });
     };
 }

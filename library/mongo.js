@@ -5,7 +5,6 @@
 
 import crypto from "crypto";
 import bluebird from "bluebird";
-//import m from "mongoose";
 import logger from "./logger";
 import config from "../config/mongo";
 
