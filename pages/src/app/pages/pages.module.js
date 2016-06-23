@@ -18,8 +18,7 @@
         'BlurAdmin.pages.charts',
         'BlurAdmin.pages.maps',
         'BlurAdmin.pages.profile',
-    ])
-        .config(routeConfig);
+    ]).config(routeConfig);
 
     /** @ngInject */
     function routeConfig($urlRouterProvider, baSidebarServiceProvider) {

@@ -6,12 +6,12 @@
 import service from "./service";
 import helper from "../utils/helper";
 import status from "../responses/status";
-import AdminModel from "../../models/admin_model";
+import UserModel from "../../models/user_model";
 
 export default class extends service {
 
     // 用户cookie键名
-    USER_COOKIE_KEY = "admin";
+    USER_COOKIE_KEY = "user";
     USER_COOKIE_KEY_SALT = "okh63b";
     USER_COOKIE_EXPIRE_TIME = 7200;
 
@@ -22,7 +22,7 @@ export default class extends service {
      * @returns {*}
      */
     check_username(username) {
-        return AdminModel.where({username: username}).countAsync().then(count => {
+        return UserModel.where({username: username}).countAsync().then(count => {
             return !count && /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(username);
         });
     }
@@ -64,7 +64,7 @@ export default class extends service {
                         full_name: full_name,
                         salt     : salt
                     };
-                    (new AdminModel(data)).save();
+                    (new UserModel(data)).save();
                     response.json(status.success());
                     break;
                 default :
@@ -83,7 +83,7 @@ export default class extends service {
         let username = request.body.username || "";
         let password = request.body.password || "";
 
-        AdminModel.findOne({username: username}, "password salt").execAsync().then(user => {
+        UserModel.findOne({username: username}, "password salt").execAsync().then(user => {
             switch (true) {
                 case !user:
                     response.json(status.out('USER_NOT_EXISTS'));
