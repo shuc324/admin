@@ -13,10 +13,7 @@ class GroupModel extends Model {
                 type   : Number,
                 default: 0
             },
-            created_time : {
-                type   : Date,
-                default: Date.now
-            },
+            created_time : Date,
             modified_time: {
                 type   : Date,
                 default: Date.now

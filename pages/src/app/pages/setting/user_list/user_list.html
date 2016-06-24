@@ -1,5 +1,5 @@
 <div class="widgets">
-    <div class="row">
+    <div class="row" ng-controller="user_list">
         <div class="col-md-12">
             <div ba-panel ba-panel-title="Editable" ba-panel-class="with-scroll">
                 <div class="add-row-editable-table">
@@ -8,47 +8,60 @@
                 <table class="table table-bordered table-hover table-condensed">
                     <tr>
                         <td>头像</td>
-                        <td>账号</td>
                         <td>全名</td>
+                        <td>账号</td>
                         <td>用户ID</td>
                         <td>群组</td>
-                        <td>审核关态</td>
-                        <td>操作</td>
+                        <td>审核状态</td>
+                        <td style="width: 170px;">操作</td>
                     </tr>
                     <tr ng-repeat="user in users" class="editable-row">
                         <td>
-                            {{$index}}
+                            <img ng-src="{{::( user.avatar)}}" width="20" height="20">
                         </td>
                         <td>
-                            <span editable-text="user.name" e-name="name" e-form="rowform" e-required>
-                              {{ user.name || 'empty' }}
+                            <span editable-text="user.full_name" e-name="full_name" e-form="rowform" e-required>
+                              {{ user.full_name || 'empty' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                              {{ user.username || 'empty' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                              {{ user._id || 'empty' }}
+                            </span>
+                        </td>
+
+
+                        <td class="select-td">
+                            <span editable-select="user.group" e-name="group" e-form="rowform" e-selectpicker
+                                  e-ng-options="s.id as s.text for s in groups">
+                              {{ user.group.name }}
                             </span>
                         </td>
                         <td class="select-td">
-                            <span editable-select="user.status" e-name="status" e-form="rowform" e-selectpicker
-                                  e-ng-options="s.value as s.text for s in statuses">
+                            <span editable-select="user.auth_status" e-name="auth_status" e-form="rowform"
+                                  e-selectpicker
+                                  e-ng-options="g.value as g.text for g in statuses">
                               {{ showStatus(user) }}
                             </span>
                         </td>
-                        <td class="select-td">
-                            <span editable-select="user.group" e-name="group" onshow="loadGroups()" e-form="rowform" e-selectpicker
-                                  e-ng-options="g.id as g.text for g in groups">
-                              {{ showGroup(user) }}
-                            </span>
-                        </td>
-                        <td></td>
-                        <td></td>
+
+
                         <td>
                             <form editable-form name="rowform" ng-show="rowform.$visible"
                                   class="form-buttons form-inline"
                                   shown="inserted == user">
                                 <button type="submit" ng-disabled="rowform.$waiting"
                                         class="btn btn-primary editable-table-button btn-xs">
-                                    Save
+                                    保存
                                 </button>
                                 <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
                                         class="btn btn-default editable-table-button btn-xs">
-                                    Cancel
+                                    取消
                                 </button>
                             </form>
                             <div class="buttons" ng-show="!rowform.$visible">

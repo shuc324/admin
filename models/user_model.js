@@ -34,10 +34,7 @@ class UserModel extends Model {
                 type   : String,
                 default: ''
             },
-            created_time : {
-                type   : Date,
-                default: Date.now
-            },
+            created_time : Date,
             modified_time: {
                 type   : Date,
                 default: Date.now

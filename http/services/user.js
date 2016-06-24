@@ -12,7 +12,7 @@ import UserModel from "../../models/user_model";
 export default class extends service {
 
     // 用户cookie键名
-    USER_COOKIE_KEY = "user";
+    USER_COOKIE_KEY = "user_token";
     USER_COOKIE_KEY_SALT = "okh63b";
     USER_COOKIE_EXPIRE_TIME = 7200;
 
@@ -62,14 +62,15 @@ export default class extends service {
                     break;
                 case ligical_username && ligical_password:
                     let salt = helper.range_str();
-                    let data = {
-                        username     : username,
-                        password     : helper.md5_encrypt(password, salt),
-                        full_name    : full_name,
-                        avatar       : avatar,
-                        salt         : salt
+                    let user = {
+                        username    : username,
+                        password    : helper.md5_encrypt(password, salt),
+                        full_name   : full_name,
+                        avatar      : avatar,
+                        salt        : salt,
+                        created_time: Date.now()
                     };
-                    (new UserModel(data)).save();
+                    (new UserModel(user)).save();
                     response.json(status.success());
                     break;
                 default :

@@ -11,6 +11,7 @@ export default class route {
         // 定义路由
         app.post('/user');
         app.post('/menu');
+        app.post('/group');
 
         route.asserts(app);
         return app.start();

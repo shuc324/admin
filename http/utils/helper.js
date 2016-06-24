@@ -73,4 +73,9 @@ export default class helper {
     static decrypt = (str, salt) => {
         return (new MixCrypto(salt)).decrypt(str.toString());
     };
+
+    // 判断object id
+    static object_id = (id) => {
+        return id.length == 16 || id.length == 24;
+    }
 }
